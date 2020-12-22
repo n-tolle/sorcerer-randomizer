@@ -13,7 +13,7 @@ let GameInfo = function(props) {
           <br></br>
           <label>
             Number of Players
-            <select onChange={e => props.handleChange(e)}>
+            <select name="players" value={props.players} onChange={e => props.handleChange(e)}>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -26,7 +26,7 @@ let GameInfo = function(props) {
         <button type="button" onClick={() => props.submit()}>Submit</button>
       </form>
     </div>
-  )
+  );
 }
 
 export default GameInfo;

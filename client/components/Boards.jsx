@@ -9,7 +9,7 @@ let Boards = function(props) {
     <div>
       <form>
         <fieldset>
-          <legend>Boards to include</legend>
+          <legend>Boards to include (if 4 players please select at least 4)</legend>
           {boardList.map(board => (
             <div key={board.lower}>
               <input type="checkbox" id={board.lower} name="boards" value={board.upper} onChange={e => props.handleChange(e)}></input>
