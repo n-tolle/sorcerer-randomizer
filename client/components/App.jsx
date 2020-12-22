@@ -1,9 +1,9 @@
 import React from 'react';
-// import Board from './Boards.jsx';
+import Boards from './Boards.jsx';
 import Characters from './Characters.jsx';
-// import Domains from './Domains.jsx';
-// import GameInfo from './GameInfo.jsx';
-// import Lineages from './Lineages.jsx';
+import Domains from './Domains.jsx';
+import GameInfo from './GameInfo.jsx';
+import Lineages from './Lineages.jsx';
 // import Setup from './Setup.jsx';
 
 class App extends React.Component {
@@ -85,11 +85,11 @@ class App extends React.Component {
     return (
       <div>
         <Characters step={this.state.step} handleChange={this.handleChange} next={this.next} />
-        {/* <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
+        <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
         <Domains step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
         <Boards step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
         <GameInfo step={this.state.step} handleChange={this.handleChange} submit={this.submit} previous={this.previous} />
-        <Setup step={this.state.step} setup={this.state.setup} /> */}
+        {/* <Setup step={this.state.step} setup={this.state.setup} /> */}
       </div>
     );
   }
