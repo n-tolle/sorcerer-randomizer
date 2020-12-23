@@ -22,7 +22,7 @@ let GameInfo = function(props) {
           </label>
         </div>
         <br></br>
-        <button type="button" onClick={() => props.previous()}>Boards</button>
+        <button type="button" onClick={() => props.previous()}>← Boards</button>
         <button type="button" onClick={() => props.submit()}>Submit</button>
       </form>
     </div>

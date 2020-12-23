@@ -10,6 +10,10 @@ let Characters = function(props) {
       <form>
         <fieldset>
           <legend>Characters to include</legend>
+          <div>
+            <input type="checkbox" id="all-characters" name="characters" onChange={e => props.selectAll(e)}></input>
+            <label htmlFor="all-characters">Select All</label>
+          </div>
           {characterList.map(character => (
             <div key={character.lower}>
               <input type="checkbox" id={character.lower} name="characters" value={character.upper} onChange={e => props.handleChange(e)}></input>
@@ -17,7 +21,7 @@ let Characters = function(props) {
             </div>
           ))}
         </fieldset>
-        <button type="button" onClick={() => props.next()}>Lineages</button>
+        <button type="button" onClick={() => props.next()}>Lineages →</button>
       </form>
     </div>
   )
