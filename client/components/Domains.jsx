@@ -10,6 +10,10 @@ let Domains = function(props) {
       <form>
         <fieldset>
           <legend>Domains to include</legend>
+          <div>
+            <input type="checkbox" id="all-domains" name="domains" onChange={e => props.selectAll(e)}></input>
+            <label htmlFor="all-domains">Select All</label>
+          </div>
           {domainList.map(domain => (
             <div key={domain.lower}>
               <input type="checkbox" id={domain.lower} name="domains" value={domain.upper} onChange={e => props.handleChange(e)}></input>
@@ -17,8 +21,8 @@ let Domains = function(props) {
             </div>
           ))}
         </fieldset>
-        <button type="button" onClick={() => props.previous()}>Lineages</button>
-        <button type="button" onClick={() => props.next()}>Boards</button>
+        <button type="button" onClick={() => props.previous()}>← Lineages</button>
+        <button type="button" onClick={() => props.next()}>Boards →</button>
       </form>
     </div>
   )

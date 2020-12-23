@@ -7,6 +7,10 @@ import Lineages from './Lineages.jsx';
 import Setup from './Setup.jsx';
 import PlayerLimit from './PlayerLimit.jsx';
 import BoardLimit from './BoardLimit.jsx';
+import boardList from './lists/boardList.js';
+import characterList from './lists/characterList.js';
+import domainList from './lists/domainList.js';
+import lineageList from './lists/lineageList.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +33,27 @@ class App extends React.Component {
     this.previous = this.previous.bind(this);
     this.submit = this.submit.bind(this);
     this.reset = this.reset.bind(this);
+    this.selectAll = this.selectAll.bind(this);
+  }
+
+  selectAll(e) {
+    let name = e.target.name
+    let step = this.state.step;
+    if (e.target.checked) {
+      let list = [];
+      if (step === 0) {
+        list = characterList;
+      } else if (step === 1) {
+        list = lineageList;
+      } else if (step === 2) {
+        list = domainList;
+      } else {
+        list = boardList;
+      }
+      this.setState({[name]: list.map(item => item.upper)});
+    } else {
+      this.setState({[name]: []});
+    }
   }
 
   handleChange(e) {
@@ -151,10 +176,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Characters step={this.state.step} handleChange={this.handleChange} next={this.next} />
-        <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
-        <Domains step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
-        <Boards step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} />
+        <Characters step={this.state.step} handleChange={this.handleChange} next={this.next} selectAll={this.selectAll} />
+        <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
+        <Domains step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
+        <Boards step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
         <GameInfo step={this.state.step} players={this.state.players} handleChange={this.handleChange} submit={this.submit} previous={this.previous} />
         <Setup step={this.state.step} players={this.state.players} playerSetup={this.state.playerSetup} boardSetup={this.state.boardSetup} endbringerSetup={this.state.endbringerSetup} endbringer={this.state.endbringer} reset={this.reset} />
         <PlayerLimit step={this.state.step} reset={this.reset} />
