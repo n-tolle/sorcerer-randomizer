@@ -44,5 +44,16 @@ let determineExistence = function(name, cb) {
   })
 };
 
+let find = function(options, cb) {
+  Options.find(options, (err, data) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, data);
+    }
+  })
+};
+
 module.exports.save = save;
 module.exports.determineExistence = determineExistence;
+module.exports.find = find;

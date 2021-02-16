@@ -11,6 +11,7 @@ import boardList from './lists/boardList.js';
 import characterList from './lists/characterList.js';
 import domainList from './lists/domainList.js';
 import lineageList from './lists/lineageList.js';
+const axios = require('axios');
 
 class App extends React.Component {
   constructor(props) {
@@ -171,6 +172,25 @@ class App extends React.Component {
       boardSetup: [],
       endbringerSetup: {nemesis: '', archetype: '', scenario: ''}
     })
+  }
+
+  componentDidMount() {
+    axios.get('/options', {
+      params: {
+        options: {type: all}
+      }
+    })
+    .then(response => {
+      this.setState({
+        characters: response.characters,
+        lineages: response.lineages,
+        domains: response.domains,
+        boards: response.boards
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
