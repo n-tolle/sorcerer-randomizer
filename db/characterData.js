@@ -45,7 +45,7 @@ let determineExistence = function(name, cb) {
 };
 
 let find = function(options, cb) {
-  Options.find(options, (err, data) => {
+  Option.find(options, (err, data) => {
     if (err) {
       cb(err);
     } else {

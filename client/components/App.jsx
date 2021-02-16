@@ -177,15 +177,15 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('/options', {
       params: {
-        options: {type: all}
+        options: {type: 'all'}
       }
     })
     .then(response => {
       this.setState({
-        characters: response.characters,
-        lineages: response.lineages,
-        domains: response.domains,
-        boards: response.boards
+        characters: response.data.characters,
+        lineages: response.data.lineages,
+        domains: response.data.domains,
+        boards: response.data.boards
       });
     })
     .catch(err => {

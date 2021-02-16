@@ -8,7 +8,8 @@ const port = 3000;
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/options', (req, res) => {
-  if (req.params.options.type === 'all') {
+  let requestOptions = JSON.parse(req.query.options);
+  if (requestOptions.type === 'all') {
     let selections = {
       characters: [],
       lineages: [],
@@ -28,7 +29,7 @@ app.get('/options', (req, res) => {
     })
   }
   else {
-    db.find(req.params.options, (err, data) => {
+    db.find(requestOptions, (err, data) => {
       if (err) {
         res.status(500).send('Internal Server Error.');
       } else {
