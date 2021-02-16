@@ -38,23 +38,36 @@ class App extends React.Component {
   }
 
   selectAll(e) {
-    let name = e.target.name
-    let step = this.state.step;
-    if (e.target.checked) {
-      let list = [];
-      if (step === 0) {
-        list = characterList;
-      } else if (step === 1) {
-        list = lineageList;
-      } else if (step === 2) {
-        list = domainList;
-      } else {
-        list = boardList;
+    let name = e.target.name;
+    let checked = e.target.checked;
+    axios.put('/updateAll', {
+      params: {
+        type: name,
+        value: checked
       }
-      this.setState({[name]: list.map(item => item.upper)});
-    } else {
-      this.setState({[name]: []});
-    }
+    })
+    .then(response => {
+      this.setState({[name]: response.data});
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    // let step = this.state.step;
+    // if (e.target.checked) {
+    //   let list = [];
+    //   if (step === 0) {
+    //     list = characterList;
+    //   } else if (step === 1) {
+    //     list = lineageList;
+    //   } else if (step === 2) {
+    //     list = domainList;
+    //   } else {
+    //     list = boardList;
+    //   }
+    //   this.setState({[name]: list.map(item => item.upper)});
+    // } else {
+    //   this.setState({[name]: []});
+    // }
   }
 
   handleChange(e) {
@@ -68,15 +81,32 @@ class App extends React.Component {
         players: Number(e.target.value)
       });
     } else {
-      let copy = this.state[name].slice(0);
-      if (e.target.checked) {
-        copy.push(e.target.value);
-      } else {
-        copy = copy.filter(selection => selection !== e.target.value);
-      }
-      this.setState({
-        [name]: copy
+      axios.put('/updateOne', {
+        params: {
+          name: e.target.value,
+          value: e.target.checked
+        }
+      })
+      .then(response => {
+        let copy = this.state[name].slice(0);
+        for (let i = 0; i < copy.length; i++) {
+          if (copy[i].name === response.data.name) {
+            copy[i].selected = response.data.selected;
+          }
+        }
+        this.setState({[name]: copy});
+      })
+      .catch(err => {
+        console.log(err);
       });
+      // if (e.target.checked) {
+      //   copy.push(e.target.value);
+      // } else {
+      //   copy = copy.filter(selection => selection !== e.target.value);
+      // }
+      // this.setState({
+      //   [name]: copy
+      // });
     }
   }
 
@@ -196,7 +226,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Characters step={this.state.step} handleChange={this.handleChange} next={this.next} selectAll={this.selectAll} />
+        <Characters step={this.state.step} characters={this.state.characters} handleChange={this.handleChange} next={this.next} selectAll={this.selectAll} />
         <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
         <Domains step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
         <Boards step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />

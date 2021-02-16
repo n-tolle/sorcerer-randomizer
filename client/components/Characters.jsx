@@ -1,5 +1,5 @@
 import React from 'react';
-import characterList from './lists/characterList.js';
+// import characterList from './lists/characterList.js';
 
 let Characters = function(props) {
   if (props.step !== 0) {
@@ -14,10 +14,10 @@ let Characters = function(props) {
             <input type="checkbox" id="all-characters" name="characters" onChange={e => props.selectAll(e)}></input>
             <label htmlFor="all-characters">Select All</label>
           </div>
-          {characterList.map(character => (
-            <div key={character.lower}>
-              <input type="checkbox" id={character.lower} name="characters" value={character.upper} onChange={e => props.handleChange(e)}></input>
-              <label htmlFor={character.lower}>{character.upper}</label>
+          {props.characters.map(character => (
+            <div key={character.name.split(' ').join('-')}>
+              <input type="checkbox" id={character.name.split(' ').join('-')} name="characters" value={character.name} checked={character.selected} onChange={e => props.handleChange(e)}></input>
+              <label htmlFor={character.name.split(' ').join('-')}>{character.name}</label>
             </div>
           ))}
         </fieldset>

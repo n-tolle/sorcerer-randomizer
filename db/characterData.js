@@ -54,6 +54,24 @@ let find = function(options, cb) {
   })
 };
 
-module.exports.save = save;
-module.exports.determineExistence = determineExistence;
-module.exports.find = find;
+let updateAll = function(type, value, cb) {
+  Option.updateMany({type: type}, {selected: value}, (err, success) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, success);
+    }
+  })
+};
+
+let updateOne = function(name, value, cb) {
+  Option.updateOne({name: name}, {selected: value}, (err, success) => {
+    if (err) {
+      cb(err);
+    } else {
+      cb(null, success);
+    }
+  })
+};
+
+module.exports = {save, determineExistence, find, updateAll, updateOne};
