@@ -128,10 +128,10 @@ class App extends React.Component {
     let pSetupCopy = this.state.playerSetup.slice(0);
     let bSetupCopy = this.state.boardSetup.slice(0);
     let eSetupCopy = {nemesis: '', archetype: '', scenario: ''};
-    let characters = this.state.characters.slice(0);
-    let lineages = this.state.lineages.slice(0);
-    let domains = this.state.domains.slice(0);
-    let boards = this.state.boards.slice(0);
+    let characters = this.state.characters.slice(0).filter(character => character.selected);
+    let lineages = this.state.lineages.slice(0).filter(lineage => lineage.selected);
+    let domains = this.state.domains.slice(0).filter(domain => domain.selected);
+    let boards = this.state.boards.slice(0).filter(board => board.selected);
     if (characters.length < players || lineages.length < players || domains.length < players) {
       this.setState({step: 6});
     } else if (boards.length < 3 || (players > 3 && boards < 4)) {
@@ -142,9 +142,9 @@ class App extends React.Component {
         let cIndex = Math.floor(Math.random() * characters.length);
         let lIndex = Math.floor(Math.random() * lineages.length);
         let dIndex = Math.floor(Math.random() * domains.length);
-        player.character = characters[cIndex];
-        player.lineage = lineages[lIndex];
-        player.domain = domains[dIndex];
+        player.character = characters[cIndex].name;
+        player.lineage = lineages[lIndex].name;
+        player.domain = domains[dIndex].name;
         characters.splice(cIndex, 1);
         lineages.splice(lIndex, 1);
         domains.splice(dIndex, 1);
@@ -153,7 +153,7 @@ class App extends React.Component {
       let boardQuantity = players === 4 ? 4 : 3;
       for (let b = 0; b < boardQuantity; b++) {
         let bIndex = Math.floor(Math.random() * boards.length);
-        bSetupCopy.push(boards[bIndex]);
+        bSetupCopy.push(boards[bIndex].name);
         boards.splice(bIndex, 1);
       }
       this.setState({
@@ -167,17 +167,13 @@ class App extends React.Component {
 
   reset() {
     this.setState({
-      characters: [],
-      lineages: [],
-      domains: [],
-      boards: [],
       endbringer: false,
       players: 2,
       step: 0,
       playerSetup: [],
       boardSetup: [],
       endbringerSetup: {nemesis: '', archetype: '', scenario: ''}
-    })
+    });
   }
 
   componentDidMount() {
@@ -203,9 +199,9 @@ class App extends React.Component {
     return (
       <div>
         <Characters step={this.state.step} characters={this.state.characters} handleChange={this.handleChange} next={this.next} selectAll={this.selectAll} />
-        <Lineages step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
-        <Domains step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
-        <Boards step={this.state.step} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
+        <Lineages step={this.state.step} lineages={this.state.lineages} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
+        <Domains step={this.state.step} domains={this.state.domains} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
+        <Boards step={this.state.step} boards={this.state.boards} handleChange={this.handleChange} next={this.next} previous={this.previous} selectAll={this.selectAll} />
         <GameInfo step={this.state.step} players={this.state.players} handleChange={this.handleChange} submit={this.submit} previous={this.previous} />
         <Setup step={this.state.step} players={this.state.players} playerSetup={this.state.playerSetup} boardSetup={this.state.boardSetup} endbringerSetup={this.state.endbringerSetup} endbringer={this.state.endbringer} reset={this.reset} />
         <PlayerLimit step={this.state.step} reset={this.reset} />
