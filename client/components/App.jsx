@@ -47,8 +47,6 @@ class App extends React.Component {
       }
     })
     .then(response => {
-      console.log('RESPONSE: ', response);
-      console.log('NAME: ', name);
       this.setState({[name]: response.data});
     })
     .catch(err => {
@@ -67,7 +65,7 @@ class App extends React.Component {
         players: Number(e.target.value)
       });
     } else {
-      axios.put('/updateOne', {
+      axios.put('/updateOne', null, {
         params: {
           name: e.target.value,
           value: e.target.checked
@@ -85,14 +83,6 @@ class App extends React.Component {
       .catch(err => {
         console.log(err);
       });
-      // if (e.target.checked) {
-      //   copy.push(e.target.value);
-      // } else {
-      //   copy = copy.filter(selection => selection !== e.target.value);
-      // }
-      // this.setState({
-      //   [name]: copy
-      // });
     }
   }
 

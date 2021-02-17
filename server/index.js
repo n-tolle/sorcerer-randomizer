@@ -46,7 +46,6 @@ app.get('/options', (req, res) => {
 });
 
 app.put('/updateAll', (req, res) => {
-  console.log('UPDATE ALL: ', req);
   db.updateAll(req.query.type, req.query.value, (err, success) => {
     if (err) {
       res.status(500).send('Internal Server Error.');
@@ -72,7 +71,7 @@ app.put('/updateOne', (req, res) => {
     if (err) {
       res.status(500).send('Internal Server Error.');
     } else {
-      db.find({name: req.query.value}, (err, data) => {
+      db.find({name: req.query.name}, (err, data) => {
         res.send({name: data[0].name, selected: data[0].selected});
       })
     }
