@@ -40,34 +40,20 @@ class App extends React.Component {
   selectAll(e) {
     let name = e.target.name;
     let checked = e.target.checked;
-    axios.put('/updateAll', {
+    axios.put('/updateAll', null, {
       params: {
         type: name,
         value: checked
       }
     })
     .then(response => {
+      console.log('RESPONSE: ', response);
+      console.log('NAME: ', name);
       this.setState({[name]: response.data});
     })
     .catch(err => {
       console.log(err);
     })
-    // let step = this.state.step;
-    // if (e.target.checked) {
-    //   let list = [];
-    //   if (step === 0) {
-    //     list = characterList;
-    //   } else if (step === 1) {
-    //     list = lineageList;
-    //   } else if (step === 2) {
-    //     list = domainList;
-    //   } else {
-    //     list = boardList;
-    //   }
-    //   this.setState({[name]: list.map(item => item.upper)});
-    // } else {
-    //   this.setState({[name]: []});
-    // }
   }
 
   handleChange(e) {

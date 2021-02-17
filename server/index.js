@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require('path');
 const db = require('../db/characterData.js');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/options', (req, res) => {
@@ -44,6 +46,7 @@ app.get('/options', (req, res) => {
 });
 
 app.put('/updateAll', (req, res) => {
+  console.log('UPDATE ALL: ', req);
   db.updateAll(req.query.type, req.query.value, (err, success) => {
     if (err) {
       res.status(500).send('Internal Server Error.');
@@ -55,7 +58,7 @@ app.put('/updateAll', (req, res) => {
           let selections = [];
           for (let i = 0; i < data.length; i++) {
             let temp = {name: data[i].name, selected: data[i].selected};
-            selections[data[i].type].push(temp);
+            selections.push(temp);
           }
           res.send(selections);
         }
