@@ -5,19 +5,20 @@ let Boards = function(props) {
   if (props.step !== 3) {
     return null;
   }
+  let notSelected = props.boards.filter(board => !board.selected);
   return (
     <div>
       <form>
         <fieldset>
           <legend>Boards to include (if 4 players please select at least 4)</legend>
           <div>
-            <input type="checkbox" id="all-boards" name="boards" onChange={e => props.selectAll(e)}></input>
+            <input type="checkbox" id="all-boards" name="boards" checked={notSelected.length === 0 ? true : false} onChange={e => props.selectAll(e)}></input>
             <label htmlFor="all-boards">Select All</label>
           </div>
-          {boardList.map(board => (
-            <div key={board.lower}>
-              <input type="checkbox" id={board.lower} name="boards" value={board.upper} onChange={e => props.handleChange(e)}></input>
-              <label htmlFor={board.lower}>{board.upper}</label>
+          {props.boards.map(board => (
+            <div key={board.name.split(' ').join('-')}>
+              <input type="checkbox" id={board.name.split(' ').join('-')} name="boards" value={board.name} checked={board.selected} onChange={e => props.handleChange(e)}></input>
+              <label htmlFor={board.name.split(' ').join('-')}>{board.name}</label>
             </div>
           ))}
         </fieldset>

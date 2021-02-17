@@ -1,23 +1,23 @@
 import React from 'react';
-import lineageList from './lists/lineageList.js';
 
 let Lineages = function(props) {
   if (props.step !== 1) {
     return null;
   }
+  let notSelected = props.lineages.filter(lineage => !lineage.selected);
   return (
     <div>
       <form>
         <fieldset>
           <legend>Lineages to include</legend>
           <div>
-            <input type="checkbox" id="all-lineages" name="lineages" onChange={e => props.selectAll(e)}></input>
+            <input type="checkbox" id="all-lineages" name="lineages" checked={notSelected.length === 0 ? true : false} onChange={e => props.selectAll(e)}></input>
             <label htmlFor="all-lineages">Select All</label>
           </div>
-          {lineageList.map(lineage => (
-            <div key={lineage.lower}>
-              <input type="checkbox" id={lineage.lower} name="lineages" value={lineage.upper} onChange={e => props.handleChange(e)}></input>
-              <label htmlFor={lineage.lower}>{lineage.upper}</label>
+          {props.lineages.map(lineage => (
+            <div key={lineage.name.split(' ').join('-')}>
+              <input type="checkbox" id={lineage.name.split(' ').join('-')} name="lineages" value={lineage.name} checked={lineage.selected} onChange={e => props.handleChange(e)}></input>
+              <label htmlFor={lineage.name.split(' ').join('-')}>{lineage.name}</label>
             </div>
           ))}
         </fieldset>
